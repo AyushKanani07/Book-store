@@ -1,0 +1,71 @@
+<div class="mx-[12px] mb-[12px]">
+<p>add-book works!</p>
+<div class="mx-[9%]">
+<div class="flex flex-row">
+    <div class="mt-[12vh] ">
+        <table>
+            <tr>
+                <td>Pristine</td>
+                <td>: {{bookTitle.pristine}}</td>
+            </tr>
+            <tr>
+                <td>Dirty</td>
+                <td>: {{bookTitle.dirty}}</td>
+            </tr>
+            <tr>
+                <td>Touched</td>
+                <td>: {{bookTitle.touched}}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>: {{bookTitle.status}}</td>
+            </tr>
+            <tr>
+                <td>Errors</td>
+                <td>: {{bookTitle.errors | json}}</td>
+            </tr>
+        </table>
+        </div>
+<div class="flex flex-col justify-center flex-wrap mx-auto content-center w-[60%]">
+<h2 class="text-center">Add new book</h2>
+Validation: {{myForm.valid}}
+<form #myForm="ngForm" (ngSubmit)="saveBook(myForm.value)" class="text-center w-[90%] flex flex-wrap flex-col" >
+    <mat-form-field appearance="fill">
+        <mat-label>Title of the book</mat-label>
+        <input matInput placeholder="" name="title" required ngModel minlength="4" maxlength="41" #bookTitle="ngModel">
+        <mat-icon matSuffix><span class="material-symbols-outlined">title</span></mat-icon>
+        <mat-hint class="text-red-500" *ngIf="bookTitle.invalid && bookTitle.touched">
+            <span *ngIf="bookTitle.errors?.['required']">Please enter the Title of the book</span>
+            <span *ngIf="bookTitle.errors?.['minlength']" >Minimum length is 4</span>
+        </mat-hint>
+      </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Author name</mat-label>
+        <input matInput placeholder="" name="author" required ngModel>
+        <mat-icon matSuffix><span class="material-symbols-outlined">person</span></mat-icon>
+      </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Total pages</mat-label>
+        <input matInput placeholder="" type="number" name="pages" required ngModel min="12" max="2100" #nop="ngModel" [(ngModel)]="myValue">
+        <mat-icon matSuffix><span class="material-symbols-outlined">auto_stories</span></mat-icon>
+        <mat-hint class="text-red-500" [hidden]="nop.valid">Pages should be in between 12 to 2100</mat-hint>
+      </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>Price</mat-label>
+        <input matInput type="number" name="price" required class="example-right-align" placeholder="0" ngModel>
+        <span matTextPrefix>$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+      </mat-form-field>
+    <!-- <input class="h-[21px] mb-[9px]" type="text" name="title" placeholder="Title of the book" ngModel> <br> 
+    <input class="h-[21px] mb-[9px]" type="text" name="author" placeholder="Name of the author" ngModel> <br>
+    <input class="h-[21px] mb-[9px]" type="number" name="pages" placeholder="How many pages" ngModel> <br>
+    <input class="h-[21px] mb-[9px]" type="number" name="price" placeholder="What's the price" ngModel> <br> -->
+    <button type="submit" [disabled]="myForm.invalid" mat-raised-button color="primary">Save</button>
+</form>
+</div>
+<!-- <h2>{{myForm.value | json}}</h2> -->
+    
+</div>
+</div>
+
+</div>

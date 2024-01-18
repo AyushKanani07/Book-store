@@ -1,9 +1,22 @@
-<div class="mt-[80px]">
-<p>home works!</p>
+<div>
+<p>home Parent works!</p>
 <div class="ml-[20px] gap-[9px] flex">
 <button class="bg-gray-500 border-2 border-gray-700 rounded-lg w-[90px]" (click)="increase()">Counter ++</button>
 <button class="bg-gray-500 border-2 border-gray-700 rounded-lg w-[90px]" (click)="decrease()">Counter --</button>
 <p>Counter = {{counter_services.counter}}</p>
 </div>
+
+<!-- <p>Data from Child = {{_testService.myData}}</p>
+<h2>Our AUthors</h2> -->
+<!-- <app-authors #authors [data]="counter_services.counter" [showAuthors]="counter_services.counter>4"></app-authors> -->
+
+<!-- <button (click)="authors.setData(1)" class="border-2 bg-gray-600 text-white rounded-md px-2 py-1 hover:text-red-400 hover:border-red-400">Pass data to child</button>
+<app-authors #authors></app-authors> -->
+
+<!-- <app-authors #author></app-authors> -->
+
+<!-- <app-authors (myData)="childData($event)"></app-authors>  -->
+
+<app-authors [data]="counter_services.counter" [author]="obj"></app-authors> 
 
 </div>

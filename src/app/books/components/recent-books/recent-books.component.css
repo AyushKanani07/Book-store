@@ -1,5 +1,8 @@
-/* 
-.example-card {
+.top{
+    margin-top: -10px;
+    margin-left: 32px;
+} 
+/* .example-card {
     max-width: 260px;
   }
   
@@ -9,4 +12,4 @@
   } */
 
   
-  
+   
