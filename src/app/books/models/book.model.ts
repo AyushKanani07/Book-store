@@ -24,4 +24,6 @@ export class BookModel{
     public get author(){
         return this._author;
     }
+
+    public authors: string[];
 }

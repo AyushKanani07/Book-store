@@ -27,11 +27,39 @@
                     <mat-icon matSuffix><span class="material-symbols-outlined">title</span></mat-icon>
                     <mat-hint class="text-red-500"> {{titleErrorMessage}} </mat-hint>
                 </mat-form-field>
-                <mat-form-field appearance="fill">
+                <!-- <mat-form-field appearance="fill" class="w-[100%]" formControlName="author">
                     <mat-label>Author name</mat-label>
-                    <input matInput placeholder="" name="author" formControlName="author">
+                    <input matInput placeholder="" name="author" formControlName="fullName">
+                    <mat-icon matSuffix><span class="material-symbols-outlined">person</span></mat-icon>
+                </mat-form-field> -->
+                <div formArrayName="authors">
+                    <mat-form-field appearance="fill" class="w-[100%]" formGroupName="authors">
+                    <mat-label>Author name</mat-label>
+                    <input matInput placeholder="" name="author" formControlName="fullName">
                     <mat-icon matSuffix><span class="material-symbols-outlined">person</span></mat-icon>
                 </mat-form-field>
+                    <div *ngFor="let auth of authors.controls; let i=index;" class="flex flex-row flex-wrap justify-center">
+                        <div class="w-[95%]">
+                            <mat-form-field appearance="fill" class="w-[100%] justify-start flex" [formGroupName]="i">
+                                <mat-label>Author name</mat-label>
+                                <input matInput placeholder="" name="author" formControlName="fullName">
+                                <mat-icon matSuffix><span class="material-symbols-outlined">person</span></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <button (click)="removeAuthor(i)" class=" flex mt-[12px] justify-end">
+                                <mat-icon><span class="material-symbols-outlined">
+                                    do_not_disturb_on
+                                    </span></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <button (click)="addMoreAuthor()">
+                        <mat-icon><span class="material-symbols-outlined">add_circle</span></mat-icon>
+                    </button>
+                    
+              
+                </div>
                 <mat-form-field appearance="fill">
                     <mat-label>Total pages</mat-label>
                     <input matInput placeholder="" type="number" name="pages" formControlName="totalPages">

@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MaterialModule } from '../../../shared/material.module';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { BookModel } from '../../models/book.model';
 import {MatRadioModule} from '@angular/material/radio';
@@ -10,7 +10,7 @@ import {MatRadioModule} from '@angular/material/radio';
 @Component({
   selector: 'app-add-book-reactive',
   standalone: true,
-  imports: [FormsModule, CommonModule, MaterialModule, ReactiveFormsModule, MatRadioModule],
+  imports: [FormsModule, CommonModule, MaterialModule, ReactiveFormsModule, MatRadioModule, NgFor],
   templateUrl: './add-book-reactive.component.html',
   styleUrl: './add-book-reactive.component.css'
 })
@@ -48,6 +48,18 @@ export class AddBookReactiveComponent implements OnInit {
     })
   }
 
+  public get authors(){
+    return <FormArray>this.addBookForm.get('authors')
+  }
+
+  public addMoreAuthor(): void{
+    this.authors.push(this.getAuthorControl())
+  }
+
+  public removeAuthor(i: number): void{
+    this.authors.removeAt(i);
+  }
+
   //This function is for set the default value for form 
   //Using patchValue we can set single default value
   //But in setValue we have to provide all the field which is present in object
@@ -78,7 +90,7 @@ export class AddBookReactiveComponent implements OnInit {
     // })
     this.addBookForm = this._formBuilder.group({
       title: ['',[Validators.required, Validators.minLength(4), Validators.maxLength(41)]],
-      author: ['',[Validators.required, Validators.maxLength(21)]],
+      // author: ['',[Validators.required, Validators.maxLength(21)]],
       totalPages: ['',[Validators.required, Validators.min(12), Validators.max(2100)]],
       price: this._formBuilder.group({
         currency: ['',Validators.required],
@@ -87,7 +99,14 @@ export class AddBookReactiveComponent implements OnInit {
       formatType: '',
       pdfFormat: '',
       docFormat: '',
+      authors: this._formBuilder.array([])
     })
+  }
+
+  private getAuthorControl(): FormGroup{
+      return this._formBuilder.group({
+        fullName: ''
+      });
   }
 
   saveBook(value: any): void {
@@ -100,12 +119,13 @@ export class AddBookReactiveComponent implements OnInit {
       currency: value.currency,
       value: value.price
     };
-    if(this.addBookForm.valid){
-      this._bookService.addBook(this.addBookForm.value);
-    }
-    else{
-      alert('Invalid form...!');
-    }
+    this._bookService.addBook(this.addBookForm.value);
+    // if(this.addBookForm.valid){
+    //   this._bookService.addBook(this.addBookForm.value);
+    // }
+    // else{
+    //   alert('Invalid form...!');
+    // }
   }
 
 
